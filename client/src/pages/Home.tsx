@@ -1,4 +1,4 @@
-import { ArrowRight, Cloud, Code, Lock, Users, Zap, BarChart3, Star, Mail, Phone, MapPin, Linkedin, Twitter, Github } from "lucide-react";
+import { ArrowRight, Cloud, Code, Lock, Users, Zap, BarChart3, Star, Mail, Phone, MapPin, Linkedin, Twitter, Github, Facebook, MessageCircle, ExternalLink, Box, Video, Palette } from "lucide-react";
 import { useState, useEffect } from "react";
 
 /**
@@ -9,6 +9,10 @@ import { useState, useEffect } from "react";
  * - Glass-morphism effects with backdrop blur
  * - Smooth animations and transitions
  * - Playfair Display for headlines, Inter for body
+ * 
+ * Contact: aki.sokpah.link@gmail.com | +231889792996
+ * Location: Mount Barclay, Montserrado County, Liberia
+ * Facebook: https://www.facebook.com/profile.php?id=61583456361691
  */
 
 export default function Home() {
@@ -16,11 +20,16 @@ export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [mapLoaded, setMapLoaded] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll);
     setIsVisible(true);
+    
+    // Simulate map loading
+    setTimeout(() => setMapLoaded(true), 500);
+    
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -49,9 +58,10 @@ export default function Home() {
           <div className="hidden md:flex items-center gap-8">
             <a href="#services" className="text-sm font-medium hover:text-primary transition-all duration-300">Services</a>
             <a href="#portfolio" className="text-sm font-medium hover:text-primary transition-all duration-300">Portfolio</a>
+            <a href="#designs" className="text-sm font-medium hover:text-primary transition-all duration-300">3D Designs</a>
             <a href="#testimonials" className="text-sm font-medium hover:text-primary transition-all duration-300">Testimonials</a>
             <a href="#contact" className="text-sm font-medium hover:text-primary transition-all duration-300">Contact</a>
-            <button className="btn-premium">Get Started</button>
+            <a href="https://wa.me/231889792996" target="_blank" rel="noopener noreferrer" className="btn-premium">WhatsApp</a>
           </div>
         </div>
       </nav>
@@ -78,16 +88,17 @@ export default function Home() {
               Cinematic Web <span className="gradient-text">Solutions</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl">
-              SAS TECH INC crafts stunning, high-performance static websites that drive sales and engage your audience with premium design and cutting-edge technology.
+              SAS TECH INC crafts stunning, high-performance static websites that drive sales and engage your audience with premium design and cutting-edge technology. Based in Monrovia, Liberia.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <button className="btn-premium flex items-center justify-center gap-2 group">
                 Explore Our Work
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
-              <button className="px-6 py-3 rounded-lg font-semibold border border-primary text-primary hover:bg-primary/10 transition-all duration-300">
-                Schedule a Call
-              </button>
+              <a href="https://wa.me/231889792996" target="_blank" rel="noopener noreferrer" className="px-6 py-3 rounded-lg font-semibold border border-primary text-primary hover:bg-primary/10 transition-all duration-300 flex items-center justify-center gap-2">
+                <MessageCircle className="w-4 h-4" />
+                Message on WhatsApp
+              </a>
             </div>
           </div>
         </div>
@@ -172,8 +183,95 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 3D Design Showcase Section */}
+      <section id="designs" className="py-20 md:py-32 bg-card/50">
+        <div className="container">
+          <div className="text-center mb-16">
+            <span className="text-primary font-medium text-sm uppercase tracking-widest">Creative Showcase</span>
+            <h2 className="font-display font-bold text-4xl md:text-5xl mt-4 mb-6">
+              3D Design & <span className="gradient-text">Video Services</span>
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              We create immersive 3D designs, cinematic videos, and interactive experiences that bring your brand to life.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[              { icon: Box, title: "3D Product Design", desc: "Stunning 3D models and product visualizations for your brand", color: "from-primary" },
+              { icon: Video, title: "Cinematic Videos", desc: "Professional video production and motion graphics", color: "from-accent" },
+              { icon: Palette, title: "Interactive Design", desc: "Engaging interactive web experiences and animations", color: "from-primary" },
+            ].map((service, idx) => (
+              <div
+                key={idx}
+                className="glass p-8 rounded-xl hover:border-primary transition-all duration-300 group cursor-pointer"
+                style={{
+                  animationDelay: `${idx * 100}ms`,
+                  animation: isVisible ? 'fadeInUp 0.6s ease-out forwards' : 'none',
+                }}
+              >
+                <div className={`w-16 h-16 rounded-lg bg-gradient-to-br ${service.color} to-accent/50 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+                  <service.icon className="w-8 h-8 text-black" />
+                </div>
+                <h3 className="font-display font-bold text-xl mb-3">{service.title}</h3>
+                <p className="text-muted-foreground mb-4">{service.desc}</p>
+                <button className="flex items-center gap-2 text-primary hover:gap-3 transition-all">
+                  View Gallery
+                  <ExternalLink className="w-4 h-4" />
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-16 grid md:grid-cols-2 gap-8">
+            <div className="glass p-8 rounded-xl">
+              <h3 className="font-display font-bold text-2xl mb-4">3D Animation & Modeling</h3>
+              <ul className="space-y-3 text-muted-foreground">
+                <li className="flex gap-3">
+                  <span className="text-primary">✓</span>
+                  <span>Product 3D visualization and rendering</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary">✓</span>
+                  <span>Architectural visualization and walkthroughs</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary">✓</span>
+                  <span>Character animation and rigging</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary">✓</span>
+                  <span>Motion graphics and visual effects</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="glass p-8 rounded-xl">
+              <h3 className="font-display font-bold text-2xl mb-4">Video Production</h3>
+              <ul className="space-y-3 text-muted-foreground">
+                <li className="flex gap-3">
+                  <span className="text-primary">✓</span>
+                  <span>Corporate video production</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary">✓</span>
+                  <span>Product demo and explainer videos</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary">✓</span>
+                  <span>Commercial and promotional content</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-primary">✓</span>
+                  <span>Social media video content</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Testimonials Section */}
-      <section id="testimonials" className="py-20 md:py-32 bg-card/50">
+      <section id="testimonials" className="py-20 md:py-32">
         <div className="container">
           <div className="text-center mb-16">
             <span className="text-primary font-medium text-sm uppercase tracking-widest">Success Stories</span>
@@ -338,7 +436,9 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="font-semibold mb-1">Email</h4>
-                    <p className="text-muted-foreground">hello@sastechinc.com</p>
+                    <a href="mailto:aki.sokpah.link@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
+                      aki.sokpah.link@gmail.com
+                    </a>
                   </div>
                 </div>
                 <div className="flex gap-4">
@@ -346,8 +446,14 @@ export default function Home() {
                     <Phone className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-1">Phone</h4>
-                    <p className="text-muted-foreground">+231 (0) 123 456 789</p>
+                    <h4 className="font-semibold mb-1">Phone & WhatsApp</h4>
+                    <a href="tel:+231889792996" className="text-muted-foreground hover:text-primary transition-colors block">
+                      +231 889 792 996
+                    </a>
+                    <a href="https://wa.me/231889792996" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 mt-1">
+                      <MessageCircle className="w-4 h-4" />
+                      Message on WhatsApp
+                    </a>
                   </div>
                 </div>
                 <div className="flex gap-4">
@@ -356,7 +462,20 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="font-semibold mb-1">Location</h4>
+                    <p className="text-muted-foreground">Mount Barclay, Montserrado County</p>
                     <p className="text-muted-foreground">Monrovia, Liberia</p>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0">
+                    <Facebook className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-1">Follow Us</h4>
+                    <a href="https://www.facebook.com/profile.php?id=61583456361691" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
+                      <Facebook className="w-4 h-4" />
+                      SAS TECH INC
+                    </a>
                   </div>
                 </div>
               </div>
@@ -414,6 +533,39 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Map Section */}
+      <section className="py-20 md:py-32 bg-card/50">
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2 className="font-display font-bold text-4xl md:text-5xl mb-4">
+              Visit Us in <span className="gradient-text">Liberia</span>
+            </h2>
+            <p className="text-muted-foreground text-lg">Mount Barclay, Montserrado County, Monrovia</p>
+          </div>
+
+          <div className="relative w-full h-96 rounded-xl overflow-hidden glass border border-border">
+            {mapLoaded && (
+              <iframe
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                loading="lazy"
+                allowFullScreen
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3973.3854155556!2d-10.807300!3d6.315500!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xf5c8d8d8d8d8d8d9%3A0x1234567890!2sMount%20Barclay%2C%20Monrovia%2C%20Liberia!5e0!3m2!1sen!2sus!4v1234567890"
+              />
+            )}
+            {!mapLoaded && (
+              <div className="w-full h-full flex items-center justify-center bg-card">
+                <div className="text-center">
+                  <MapPin className="w-12 h-12 text-primary mx-auto mb-4 animate-pulse" />
+                  <p className="text-muted-foreground">Loading map...</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20 md:py-32 relative overflow-hidden">
         <div
@@ -435,9 +587,10 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button className="btn-premium">Start Your Project</button>
-            <button className="px-6 py-3 rounded-lg font-semibold border border-primary text-primary hover:bg-primary/10 transition-all duration-300">
-              Contact Us
-            </button>
+            <a href="https://wa.me/231889792996" target="_blank" rel="noopener noreferrer" className="px-6 py-3 rounded-lg font-semibold border border-primary text-primary hover:bg-primary/10 transition-all duration-300 flex items-center justify-center gap-2">
+              <MessageCircle className="w-4 h-4" />
+              WhatsApp Us
+            </a>
           </div>
         </div>
       </section>
@@ -448,35 +601,45 @@ export default function Home() {
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <h3 className="font-display font-bold mb-4">SAS TECH INC</h3>
-              <p className="text-muted-foreground text-sm">Premium web solutions from Liberia to the world.</p>
+              <p className="text-muted-foreground text-sm">Premium web solutions from Liberia to the world. Based in Monrovia.</p>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Services</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-primary transition-all duration-300">Web Design</a></li>
-                <li><a href="#" className="hover:text-primary transition-all duration-300">Development</a></li>
-                <li><a href="#" className="hover:text-primary transition-all duration-300">Consulting</a></li>
+                <li><a href="#services" className="hover:text-primary transition-all duration-300">Web Design</a></li>
+                <li><a href="#designs" className="hover:text-primary transition-all duration-300">3D Design</a></li>
+                <li><a href="#" className="hover:text-primary transition-all duration-300">Video Production</a></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Company</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li><a href="#" className="hover:text-primary transition-all duration-300">About</a></li>
-                <li><a href="#" className="hover:text-primary transition-all duration-300">Portfolio</a></li>
-                <li><a href="#" className="hover:text-primary transition-all duration-300">Contact</a></li>
+                <li><a href="#portfolio" className="hover:text-primary transition-all duration-300">Portfolio</a></li>
+                <li><a href="#contact" className="hover:text-primary transition-all duration-300">Contact</a></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Connect</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-primary transition-all duration-300">Twitter</a></li>
-                <li><a href="#" className="hover:text-primary transition-all duration-300">LinkedIn</a></li>
-                <li><a href="#" className="hover:text-primary transition-all duration-300">GitHub</a></li>
+                <li><a href="https://www.facebook.com/profile.php?id=61583456361691" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-all duration-300 flex items-center gap-2">
+                  <Facebook className="w-4 h-4" />
+                  Facebook
+                </a></li>
+                <li><a href="https://wa.me/231889792996" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-all duration-300 flex items-center gap-2">
+                  <MessageCircle className="w-4 h-4" />
+                  WhatsApp
+                </a></li>
+                <li><a href="mailto:aki.sokpah.link@gmail.com" className="hover:text-primary transition-all duration-300 flex items-center gap-2">
+                  <Mail className="w-4 h-4" />
+                  Email
+                </a></li>
               </ul>
             </div>
           </div>
           <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground">
-            <p>&copy; 2026 SAS TECH INC. All rights reserved. Based in Liberia.</p>
+            <p>&copy; 2026 SAS TECH INC. All rights reserved. Mount Barclay, Montserrado County, Liberia.</p>
+            <p className="mt-2">Phone: +231 889 792 996 | Email: aki.sokpah.link@gmail.com</p>
           </div>
         </div>
       </footer>

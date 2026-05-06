@@ -1,0 +1,27 @@
+{
+  "name": "SAS TECH INC - Cinematic Web Solutions",
+  "short_name": "SAS TECH",
+  "description": "Premium web design and development services from Liberia. We create stunning, high-performance static websites that drive sales and engagement.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0F1117",
+  "theme_color": "#00D9FF",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    }
+  ],
+  "categories": ["business", "technology"],
+  "screenshots": [
+    {
+      "src": "/screenshot.png",
+      "sizes": "540x720",
+      "type": "image/png"
+    }
+  ],
+  "prefer_related_applications": false
+}
