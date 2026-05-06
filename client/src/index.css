@@ -215,14 +215,11 @@
     box-shadow: var(--glow-gold);
   }
 
-  /* Smooth Transitions */
-  .transition-smooth {
-    transition: var(--transition-smooth);
-  }
+  /* Smooth Transitions - using Tailwind's built-in transition utilities */
 
   /* Premium Button Styles */
   .btn-premium {
-    @apply px-6 py-3 rounded-lg font-semibold transition-smooth;
+    @apply px-6 py-3 rounded-lg font-semibold transition-all duration-300;
     background: linear-gradient(135deg, #00D9FF 0%, #00A8CC 100%);
     color: #000000;
     border: 1px solid rgba(0, 217, 255, 0.5);
@@ -232,6 +229,7 @@
   .btn-premium:hover {
     transform: translateY(-2px);
     box-shadow: 0 0 30px rgba(0, 217, 255, 0.5);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   /* Gradient Text */

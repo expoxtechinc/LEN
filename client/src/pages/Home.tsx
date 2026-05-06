@@ -34,9 +34,9 @@ export default function Home() {
             <span className="font-display font-bold text-xl">SAS TECH</span>
           </div>
           <div className="hidden md:flex items-center gap-8">
-            <a href="#services" className="text-sm font-medium hover:text-primary transition-smooth">Services</a>
-            <a href="#portfolio" className="text-sm font-medium hover:text-primary transition-smooth">Portfolio</a>
-            <a href="#about" className="text-sm font-medium hover:text-primary transition-smooth">About</a>
+            <a href="#services" className="text-sm font-medium hover:text-primary transition-all duration-300">Services</a>
+            <a href="#portfolio" className="text-sm font-medium hover:text-primary transition-all duration-300">Portfolio</a>
+            <a href="#about" className="text-sm font-medium hover:text-primary transition-all duration-300">About</a>
             <button className="btn-premium">Get Started</button>
           </div>
         </div>
@@ -57,7 +57,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/60 z-10" />
 
         <div className="container relative z-20">
-          <div className={`max-w-3xl transition-smooth duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className={`max-w-3xl transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <div className="inline-block mb-6">
               <span className="text-primary font-medium text-sm uppercase tracking-widest">Welcome to the future</span>
             </div>
@@ -72,7 +72,7 @@ export default function Home() {
                 Explore Our Work
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
-              <button className="px-6 py-3 rounded-lg font-semibold border border-primary text-primary hover:bg-primary/10 transition-smooth">
+              <button className="px-6 py-3 rounded-lg font-semibold border border-primary text-primary hover:bg-primary/10 transition-all duration-300">
                 Schedule a Call
               </button>
             </div>
@@ -104,7 +104,7 @@ export default function Home() {
             ].map((service, idx) => (
               <div
                 key={idx}
-                className="glass group hover:border-primary transition-smooth p-8 hover:shadow-lg hover:shadow-primary/20 cursor-pointer"
+                className="glass group hover:border-primary transition-all duration-300 p-8 hover:shadow-lg hover:shadow-primary/20 cursor-pointer"
                 style={{
                   animationDelay: `${idx * 100}ms`,
                   animation: isVisible ? 'fadeInUp 0.6s ease-out forwards' : 'none',
@@ -149,7 +149,7 @@ export default function Home() {
                   alt={project.title}
                   className="w-full h-64 md:h-80 object-cover group-hover:scale-110 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-smooth flex flex-col justify-end p-6">
+                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-all duration-300 flex flex-col justify-end p-6">
                   <h3 className="font-display font-bold text-2xl mb-2">{project.title}</h3>
                   <p className="text-sm text-muted-foreground">{project.desc}</p>
                 </div>
@@ -237,7 +237,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button className="btn-premium">Start Your Project</button>
-            <button className="px-6 py-3 rounded-lg font-semibold border border-primary text-primary hover:bg-primary/10 transition-smooth">
+            <button className="px-6 py-3 rounded-lg font-semibold border border-primary text-primary hover:bg-primary/10 transition-all duration-300">
               Contact Us
             </button>
           </div>
@@ -255,25 +255,25 @@ export default function Home() {
             <div>
               <h4 className="font-semibold mb-4">Services</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-primary transition-smooth">Web Design</a></li>
-                <li><a href="#" className="hover:text-primary transition-smooth">Development</a></li>
-                <li><a href="#" className="hover:text-primary transition-smooth">Consulting</a></li>
+                <li><a href="#" className="hover:text-primary transition-all duration-300">Web Design</a></li>
+                <li><a href="#" className="hover:text-primary transition-all duration-300">Development</a></li>
+                <li><a href="#" className="hover:text-primary transition-all duration-300">Consulting</a></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Company</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-primary transition-smooth">About</a></li>
-                <li><a href="#" className="hover:text-primary transition-smooth">Portfolio</a></li>
-                <li><a href="#" className="hover:text-primary transition-smooth">Contact</a></li>
+                <li><a href="#" className="hover:text-primary transition-all duration-300">About</a></li>
+                <li><a href="#" className="hover:text-primary transition-all duration-300">Portfolio</a></li>
+                <li><a href="#" className="hover:text-primary transition-all duration-300">Contact</a></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Connect</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-primary transition-smooth">Twitter</a></li>
-                <li><a href="#" className="hover:text-primary transition-smooth">LinkedIn</a></li>
-                <li><a href="#" className="hover:text-primary transition-smooth">GitHub</a></li>
+                <li><a href="#" className="hover:text-primary transition-all duration-300">Twitter</a></li>
+                <li><a href="#" className="hover:text-primary transition-all duration-300">LinkedIn</a></li>
+                <li><a href="#" className="hover:text-primary transition-all duration-300">GitHub</a></li>
               </ul>
             </div>
           </div>
