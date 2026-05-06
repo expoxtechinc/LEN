@@ -4,12 +4,6 @@
   "outputDirectory": "dist/public",
   "framework": "vite",
   "regions": ["iad1"],
-  "functions": {
-    "server/index.ts": {
-      "memory": 1024,
-      "maxDuration": 60
-    }
-  },
   "env": {
     "NODE_ENV": "production"
   },

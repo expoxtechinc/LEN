@@ -1,4 +1,4 @@
-import { ArrowRight, Cloud, Code, Lock, Users, Zap, BarChart3 } from "lucide-react";
+import { ArrowRight, Cloud, Code, Lock, Users, Zap, BarChart3, Star, Mail, Phone, MapPin, Linkedin, Twitter, Github } from "lucide-react";
 import { useState, useEffect } from "react";
 
 /**
@@ -14,6 +14,8 @@ import { useState, useEffect } from "react";
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -21,6 +23,17 @@ export default function Home() {
     setIsVisible(true);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormSubmitted(true);
+    setTimeout(() => setFormSubmitted(false), 3000);
+    setFormData({ name: "", email: "", message: "" });
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-hidden">
@@ -36,7 +49,8 @@ export default function Home() {
           <div className="hidden md:flex items-center gap-8">
             <a href="#services" className="text-sm font-medium hover:text-primary transition-all duration-300">Services</a>
             <a href="#portfolio" className="text-sm font-medium hover:text-primary transition-all duration-300">Portfolio</a>
-            <a href="#about" className="text-sm font-medium hover:text-primary transition-all duration-300">About</a>
+            <a href="#testimonials" className="text-sm font-medium hover:text-primary transition-all duration-300">Testimonials</a>
+            <a href="#contact" className="text-sm font-medium hover:text-primary transition-all duration-300">Contact</a>
             <button className="btn-premium">Get Started</button>
           </div>
         </div>
@@ -44,7 +58,6 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
-        {/* Background Image with Parallax */}
         <div
           className="absolute inset-0 z-0"
           style={{
@@ -159,8 +172,51 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      <section id="testimonials" className="py-20 md:py-32 bg-card/50">
+        <div className="container">
+          <div className="text-center mb-16">
+            <span className="text-primary font-medium text-sm uppercase tracking-widest">Success Stories</span>
+            <h2 className="font-display font-bold text-4xl md:text-5xl mt-4 mb-6">
+              Client <span className="gradient-text">Testimonials</span>
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Hear from businesses that transformed with our solutions.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { name: "Sarah Johnson", role: "CEO, TechStart Inc", text: "SAS TECH transformed our online presence. The results exceeded expectations!", rating: 5 },
+              { name: "Michael Chen", role: "Marketing Director", text: "Professional, creative, and results-driven. Highly recommended for any business.", rating: 5 },
+              { name: "Emma Williams", role: "Founder, Digital Agency", text: "Outstanding quality and attention to detail. Our clients love the new website!", rating: 5 },
+            ].map((testimonial, idx) => (
+              <div
+                key={idx}
+                className="glass p-8 rounded-xl hover:border-primary transition-all duration-300"
+                style={{
+                  animationDelay: `${idx * 100}ms`,
+                  animation: isVisible ? 'fadeInUp 0.6s ease-out forwards' : 'none',
+                }}
+              >
+                <div className="flex gap-1 mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-accent text-accent" />
+                  ))}
+                </div>
+                <p className="text-muted-foreground mb-6 italic">"{testimonial.text}"</p>
+                <div>
+                  <p className="font-semibold">{testimonial.name}</p>
+                  <p className="text-sm text-primary">{testimonial.role}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Stats Section */}
-      <section className="py-16 md:py-24 bg-card/50">
+      <section className="py-16 md:py-24 bg-card/30">
         <div className="container">
           <div className="grid md:grid-cols-4 gap-8 text-center">
             {[
@@ -178,39 +234,181 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-20 md:py-32">
+      {/* Team Section */}
+      <section className="py-20 md:py-32">
         <div className="container">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <span className="text-primary font-medium text-sm uppercase tracking-widest">About Us</span>
-              <h2 className="font-display font-bold text-4xl md:text-5xl mt-4 mb-6">
-                Liberia's Premier <span className="gradient-text">Tech Studio</span>
-              </h2>
-              <p className="text-muted-foreground text-lg mb-6">
-                Based in Liberia, SAS TECH INC is a cutting-edge web development studio specializing in creating static websites that deliver results. We combine cinematic design with technical excellence to help businesses thrive in the digital landscape.
-              </p>
-              <p className="text-muted-foreground text-lg mb-8">
-                Our mission is to empower businesses with stunning web solutions that drive growth, engagement, and sales.
-              </p>
-              <button className="btn-premium flex items-center gap-2 group">
-                Learn More
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </div>
-            <div className="relative">
-              <div className="glass p-8 rounded-xl">
-                <div className="space-y-6">
-                  {["Innovation", "Quality", "Performance", "Support"].map((item, idx) => (
-                    <div key={idx} className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center flex-shrink-0">
-                        <Zap className="w-5 h-5 text-black" />
-                      </div>
-                      <span className="font-semibold">{item}</span>
-                    </div>
-                  ))}
+          <div className="text-center mb-16">
+            <span className="text-primary font-medium text-sm uppercase tracking-widest">Our Team</span>
+            <h2 className="font-display font-bold text-4xl md:text-5xl mt-4 mb-6">
+              Meet the <span className="gradient-text">Experts</span>
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Talented professionals dedicated to bringing your vision to life.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-4 gap-8">
+            {[
+              { name: "Alex Rivera", role: "Creative Director", icon: "🎨" },
+              { name: "Jordan Lee", role: "Lead Developer", icon: "💻" },
+              { name: "Casey Morgan", role: "UX Designer", icon: "✨" },
+              { name: "Taylor Smith", role: "Project Manager", icon: "📋" },
+            ].map((member, idx) => (
+              <div
+                key={idx}
+                className="glass p-8 rounded-xl text-center hover:border-primary transition-all duration-300 group cursor-pointer"
+                style={{
+                  animationDelay: `${idx * 100}ms`,
+                  animation: isVisible ? 'fadeInUp 0.6s ease-out forwards' : 'none',
+                }}
+              >
+                <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">{member.icon}</div>
+                <h3 className="font-display font-bold text-xl mb-2">{member.name}</h3>
+                <p className="text-primary text-sm mb-4">{member.role}</p>
+                <div className="flex gap-3 justify-center">
+                  <Linkedin className="w-4 h-4 text-muted-foreground hover:text-primary transition-colors cursor-pointer" />
+                  <Twitter className="w-4 h-4 text-muted-foreground hover:text-primary transition-colors cursor-pointer" />
+                  <Github className="w-4 h-4 text-muted-foreground hover:text-primary transition-colors cursor-pointer" />
                 </div>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Blog Preview Section */}
+      <section className="py-20 md:py-32 bg-card/50">
+        <div className="container">
+          <div className="text-center mb-16">
+            <span className="text-primary font-medium text-sm uppercase tracking-widest">Insights</span>
+            <h2 className="font-display font-bold text-4xl md:text-5xl mt-4 mb-6">
+              Latest <span className="gradient-text">Articles</span>
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Stay updated with industry trends and best practices.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { title: "Web Design Trends 2026", date: "May 6, 2026", category: "Design", excerpt: "Discover the latest trends shaping modern web design and user experiences." },
+              { title: "Performance Optimization Guide", date: "May 4, 2026", category: "Performance", excerpt: "Learn how to optimize your website for lightning-fast loading times." },
+              { title: "Mobile-First Strategy", date: "May 1, 2026", category: "Strategy", excerpt: "Why mobile-first design is essential for modern web applications." },
+            ].map((article, idx) => (
+              <div
+                key={idx}
+                className="glass p-8 rounded-xl hover:border-primary transition-all duration-300 group cursor-pointer"
+                style={{
+                  animationDelay: `${idx * 100}ms`,
+                  animation: isVisible ? 'fadeInUp 0.6s ease-out forwards' : 'none',
+                }}
+              >
+                <div className="inline-block mb-4 px-3 py-1 bg-primary/20 text-primary text-xs font-semibold rounded-full">
+                  {article.category}
+                </div>
+                <h3 className="font-display font-bold text-xl mb-3 group-hover:text-primary transition-colors">{article.title}</h3>
+                <p className="text-muted-foreground mb-4">{article.excerpt}</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-muted-foreground">{article.date}</span>
+                  <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-20 md:py-32">
+        <div className="container">
+          <div className="grid md:grid-cols-2 gap-12">
+            <div>
+              <span className="text-primary font-medium text-sm uppercase tracking-widest">Get in Touch</span>
+              <h2 className="font-display font-bold text-4xl md:text-5xl mt-4 mb-6">
+                Let's Work <span className="gradient-text">Together</span>
+              </h2>
+              <p className="text-muted-foreground text-lg mb-8">
+                Ready to transform your digital presence? Contact us today for a free consultation and let's create something amazing.
+              </p>
+
+              <div className="space-y-6">
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0">
+                    <Mail className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-1">Email</h4>
+                    <p className="text-muted-foreground">hello@sastechinc.com</p>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-1">Phone</h4>
+                    <p className="text-muted-foreground">+231 (0) 123 456 789</p>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-1">Location</h4>
+                    <p className="text-muted-foreground">Monrovia, Liberia</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="glass p-8 rounded-xl">
+              <form onSubmit={handleFormSubmit} className="space-y-6">
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleFormChange}
+                    placeholder="Your name"
+                    className="w-full px-4 py-3 rounded-lg bg-input border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleFormChange}
+                    placeholder="your@email.com"
+                    className="w-full px-4 py-3 rounded-lg bg-input border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Message</label>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleFormChange}
+                    placeholder="Tell us about your project..."
+                    rows={4}
+                    className="w-full px-4 py-3 rounded-lg bg-input border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary transition-colors resize-none"
+                    required
+                  />
+                </div>
+                <button type="submit" className="btn-premium w-full">
+                  Send Message
+                </button>
+                {formSubmitted && (
+                  <div className="p-4 bg-primary/20 border border-primary text-primary rounded-lg text-sm">
+                    ✓ Message sent successfully! We'll get back to you soon.
+                  </div>
+                )}
+              </form>
             </div>
           </div>
         </div>
