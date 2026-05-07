@@ -1,6 +1,7 @@
-import { ArrowRight, Cloud, Code, Lock, Users, Zap, BarChart3, Star, Mail, Phone, MapPin, Linkedin, Twitter, Github, Facebook, MessageCircle, ExternalLink, Box, Video, Palette, Loader, ChevronDown, Check, Briefcase, Award, TrendingUp, Eye, Rocket, Shield, Smartphone, Globe, Headphones, BookOpen } from "lucide-react";
+import { ArrowRight, Cloud, Code, Lock, Users, Zap, BarChart3, Star, Mail, Phone, MapPin, Linkedin, Twitter, Github, Facebook, MessageCircle, ExternalLink, Box, Video, Palette, Loader, ChevronDown, Check, Briefcase, Award, TrendingUp, Eye, Rocket, Shield, Smartphone, Globe, Headphones, BookOpen, Moon, Sun } from "lucide-react";
 import { useState, useEffect } from "react";
 import { sendContactEmail, validateContactForm } from "@/lib/emailService";
+import { useTheme } from "@/contexts/ThemeContext";
 
 /**
  * SAS TECH INC - Cinematic Mobile App
@@ -41,6 +42,7 @@ import { sendContactEmail, validateContactForm } from "@/lib/emailService";
  */
 
 export default function Home() {
+  const { theme, toggleTheme } = useTheme();
   const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
@@ -130,12 +132,23 @@ export default function Home() {
             </div>
             <span className="font-display font-bold text-xl">SAS TECH</span>
           </div>
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-6">
             <a href="#services" className="text-sm font-medium hover:text-primary transition-all duration-300">Services</a>
             <a href="#pricing" className="text-sm font-medium hover:text-primary transition-all duration-300">Pricing</a>
             <a href="#portfolio" className="text-sm font-medium hover:text-primary transition-all duration-300">Portfolio</a>
             <a href="#faq" className="text-sm font-medium hover:text-primary transition-all duration-300">FAQ</a>
             <a href="#contact" className="text-sm font-medium hover:text-primary transition-all duration-300">Contact</a>
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg bg-primary/10 hover:bg-primary/20 transition-all duration-300 flex items-center justify-center"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-5 h-5 text-primary" />
+              ) : (
+                <Moon className="w-5 h-5 text-primary" />
+              )}
+            </button>
             <a href="https://wa.me/231889792996" target="_blank" rel="noopener noreferrer" className="btn-premium">WhatsApp</a>
           </div>
         </div>
