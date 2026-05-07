@@ -1,5 +1,6 @@
-import { ArrowRight, Cloud, Code, Lock, Users, Zap, BarChart3, Star, Mail, Phone, MapPin, Linkedin, Twitter, Github, Facebook, MessageCircle, ExternalLink, Box, Video, Palette } from "lucide-react";
+import { ArrowRight, Cloud, Code, Lock, Users, Zap, BarChart3, Star, Mail, Phone, MapPin, Linkedin, Twitter, Github, Facebook, MessageCircle, ExternalLink, Box, Video, Palette, Loader } from "lucide-react";
 import { useState, useEffect } from "react";
+import { sendContactEmail, validateContactForm } from "@/lib/emailService";
 
 /**
  * SAS TECH INC - Cinematic Mobile App
@@ -18,8 +19,10 @@ import { useState, useEffect } from "react";
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formError, setFormError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [mapLoaded, setMapLoaded] = useState(false);
 
   useEffect(() => {
@@ -35,13 +38,49 @@ export default function Home() {
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormError("");
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormSubmitted(true);
-    setTimeout(() => setFormSubmitted(false), 3000);
-    setFormData({ name: "", email: "", message: "" });
+    setFormError("");
+    setIsLoading(true);
+
+    try {
+      const validation = validateContactForm({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+      });
+
+      if (!validation.isValid) {
+        const errorMessages = Object.values(validation.errors).join(", ");
+        setFormError(errorMessages);
+        setIsLoading(false);
+        return;
+      }
+
+      const response = await sendContactEmail({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+      });
+
+      if (response.success) {
+        setFormSubmitted(true);
+        setFormData({ name: "", email: "", phone: "", message: "" });
+        setTimeout(() => setFormSubmitted(false), 5000);
+      } else {
+        setFormError(response.message || "Failed to send message. Please try again.");
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setFormError("An error occurred. Please try again or contact us directly.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -491,7 +530,8 @@ export default function Home() {
                     value={formData.name}
                     onChange={handleFormChange}
                     placeholder="Your name"
-                    className="w-full px-4 py-3 rounded-lg bg-input border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                    className="w-full px-4 py-3 rounded-lg bg-input border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary transition-colors disabled:opacity-50"
+                    disabled={isLoading}
                     required
                   />
                 </div>
@@ -503,8 +543,21 @@ export default function Home() {
                     value={formData.email}
                     onChange={handleFormChange}
                     placeholder="your@email.com"
-                    className="w-full px-4 py-3 rounded-lg bg-input border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                    className="w-full px-4 py-3 rounded-lg bg-input border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary transition-colors disabled:opacity-50"
+                    disabled={isLoading}
                     required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Phone (Optional)</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleFormChange}
+                    placeholder="+231 XXX XXX XXX"
+                    className="w-full px-4 py-3 rounded-lg bg-input border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary transition-colors disabled:opacity-50"
+                    disabled={isLoading}
                   />
                 </div>
                 <div>
@@ -515,16 +568,29 @@ export default function Home() {
                     onChange={handleFormChange}
                     placeholder="Tell us about your project..."
                     rows={4}
-                    className="w-full px-4 py-3 rounded-lg bg-input border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary transition-colors resize-none"
+                    className="w-full px-4 py-3 rounded-lg bg-input border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary transition-colors resize-none disabled:opacity-50"
+                    disabled={isLoading}
                     required
                   />
                 </div>
-                <button type="submit" className="btn-premium w-full">
-                  Send Message
+                <button type="submit" className="btn-premium w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed" disabled={isLoading}>
+                  {isLoading ? (
+                    <>
+                      <Loader className="w-4 h-4 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    "Send Message"
+                  )}
                 </button>
                 {formSubmitted && (
-                  <div className="p-4 bg-primary/20 border border-primary text-primary rounded-lg text-sm">
+                  <div className="p-4 bg-primary/20 border border-primary text-primary rounded-lg text-sm animate-in fade-in">
                     ✓ Message sent successfully! We'll get back to you soon.
+                  </div>
+                )}
+                {formError && (
+                  <div className="p-4 bg-destructive/20 border border-destructive text-destructive rounded-lg text-sm animate-in fade-in">
+                    ✕ {formError}
                   </div>
                 )}
               </form>
